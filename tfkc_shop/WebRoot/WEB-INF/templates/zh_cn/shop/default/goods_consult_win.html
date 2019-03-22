@@ -1,0 +1,89 @@
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({					 
+       rules: {
+			consult_content: "required"#if($!config.securityCodeConsult),
+			consult_code:{
+				required:true,
+				remote:{
+		           url: "$!webPath/verify_code.htm",     //鍚庡彴澶勭悊绋嬪簭
+                   type: "post",               //鏁版嵁鍙戦�鏂瑰紡
+                   dataType: "json",           //鎺ュ彈鏁版嵁鏍煎紡   
+                   data: {                     //瑕佷紶閫掔殑鏁版嵁
+                         "code": function(){return jQuery("#consult_code").val();}
+						 
+		                }
+			       }
+			}
+			#end
+			},
+		messages: {
+			consult_content: "鍐呭涓嶈兘涓虹┖"#if($!config.securityCodeConsult),
+			consult_code:{required:"涓嶈兘涓虹┖","remote":"楠岃瘉鐮侀敊璇�}
+			#end
+					},
+	   errorPlacement: function(error, element){ 
+	      if(jQuery(error[0]).html()!=""){
+		      element.parent().remove(".ask_error");
+		      element.parent().append("<i class='ask_error'></i>");
+              error.appendTo(element.parent().find(".ask_error"));
+	        }
+        },
+	   submitHandler:function(){
+	      var params = jQuery("#theForm").serialize();
+		  jQuery.ajax({type:'POST',url:'$!webPath/goods_consult_save.htm',data:params,success:function(data){
+		      jQuery("#goods_consult_list").empty();
+			  jQuery("#goods_consult_list").append(data);
+			  jQuery("#goods_cousult_win").remove();
+		  }}
+		 );
+	   }
+  });
+});
+function refreshCode(){
+   jQuery("#code_img").attr("src","$!webPath/verify.htm?name=consult_code&d="+new Date().getTime());
+}
+</script>
+<form action="$!webPath/goods_consult_save.htm" method="post" id="theForm" name="theForm">
+  <div class="consultation_top_c_ask_center">
+    <ul>
+      <li class="ask_c_select"> <span>鍒嗙被锛�/span>
+        <select name="consult_type" id="consult_type" class="ask_c_select_s">
+          <option value="浜у搧鍜ㄨ">浜у搧鍜ㄨ</option>
+          <option value="搴撳瓨鍙婇厤閫�>搴撳瓨鍙婇厤閫�/option>
+          <option value="鏀粯鍙婂彂绁�>鏀粯鍙婂彂绁�/option>
+          <option value="鍞悗鍜ㄨ">鍞悗鍜ㄨ</option>
+          <option value="淇冮攢娲诲姩">淇冮攢娲诲姩</option>
+        </select>
+      </li>
+      <li class="ask_c_word"> <span>鍐呭锛�/span>
+        <textarea name="consult_content" cols="" rows="" id="consult_content"></textarea>
+        </li>
+       #if($!config.securityCodeConsult) 
+       <script>
+	   jQuery(function(){
+		   jQuery("#code_img").attr("src","$!webPath/verify.htm?d"+new Date().getTime());
+		   })
+                 function refreshCode(){
+	                 jQuery("#code_img").attr("src","$!webPath/verify.htm?d"+new Date().getTime());
+                 }
+             </script>
+      <li class="ask_c_password"> <span>楠岃瘉鐮侊細</span> <i>
+        <input name="consult_code" type="text" id="consult_code" />
+        </i>#if($!config.securityCodeType=='voice')
+                  <script>
+				   function readCode(id){
+                         var  s = "<embed id='sound_play' name='sound_play' src='$!webPath/resources/flash/soundPlayer.swf?" + (new Date().getTime()) + "' FlashVars='url=$!webPath"+ "' width='0'   height='0' allowScriptAccess='always' type='application/x-shockwave-flash' pluginspage='http://www.macromedia.com/go/getflashplayer' /></embed>";
+                    jQuery("#"+id).html(s);
+                    }
+			 </script>
+                  <img id="code_img" src="$!webPath/verify.htm" width="59" height="27" style="display:none;" /> <a href="javascript:void(0);" onclick="readCode('player')" title="鏈楄楠岃瘉鐮� class="code_speech"></a> <span id="player"></span> #else <b><img style="cursor:pointer;" src="$!webPath/verify.htm" id="code_img" onclick="refreshCode();" width="59" height="27"  title="鐐瑰嚮鏇存崲楠岃瘉鐮� /></b>#end <a href="javascript:void(0);" onclick="refreshCode();" class="code_refresh"></a>
+
+       </li>
+       #end
+      <li class="ask_c_submit" style="margin-left:0px; text-align:center;"><a href="javascript:void(0);" onclick="jQuery('#theForm').submit();">鎻愪氦</a>
+        <input name="goods_id" type="hidden" id="goods_id" value="$!goods_id" />
+      </li>
+    </ul>
+  </div>
+</form>

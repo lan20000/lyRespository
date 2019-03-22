@@ -1,0 +1,283 @@
+<script>
+    jQuery(document).ready(function () {
+    	
+        var time = null;    
+        var list = jQuery("#navlist_second");
+        var box = jQuery("#navbox_second");
+        var lista = list.find("a");
+        console.log("===>"+JSON.stringify(lista))
+        for (var i = 0, j = lista.length; i < j; i++) {
+            if (lista[i].className == "now") {
+                var olda = i;
+            }
+        }
+        var box_show = function (hei) {
+            box.stop().animate({
+                height: hei,
+                opacity: 1
+            }, 400);
+        }
+        var box_hide = function () {
+            box.stop().animate({
+                height: 0,
+                opacity: 0
+            }, 400);
+        }
+        lista.hover(function () {
+        	if((list.find("a").index(jQuery(this))!=0)&&(list.find("a").index(jQuery(this))!=1)&&(list.find("a").index(jQuery(this))!=2)){
+	            lista.removeClass("now");
+	            jQuery(this).addClass("now");
+	            clearTimeout(time);	            
+	            var index = list.find("a").index(jQuery(this));
+	            box.find(".cont").hide().eq(index).show();
+	            var _height = box.find(".cont").eq(index).height() + 54;
+	            box_show(_height)
+           	}
+        }, function () {
+            time = setTimeout(function () {
+                box.find(".cont").hide();
+                box_hide();
+            }, 50);
+            lista.removeClass("now");
+            lista.eq(olda).addClass("now");
+        });
+        box.find(".cont").hover(function () {
+            var _index = box.find(".cont").index(jQuery(this));
+            lista.removeClass("now");
+            lista.eq(_index).addClass("now");
+            clearTimeout(time);
+            jQuery(this).show();
+            var _height = jQuery(this).height() + 54;
+            box_show(_height);
+        }, function () {
+            time = setTimeout(function () {
+            	jQuery(this).hide();
+                box_hide();
+            }, 50);
+            lista.removeClass("now");
+            lista.eq(olda).addClass("now");
+        });
+
+        jQuery("#navul li").each(function () {
+            var original_url = jQuery(this).attr("original_url");
+            if ("$!{current_url}".indexOf(original_url) >= 0) {
+                jQuery(this).addClass("this");
+            }
+        });
+    });
+</script>
+<!-- <style>
+.left_menu{
+display: none;
+}
+.left_menu:hover{
+display: block;
+}
+</style> -->
+
+
+<div id="main_demo">
+
+    <div class="nav_menu">
+        <div class="navf">        	
+            <div class="lists" id="navlist_second">
+           
+                <ul>
+			        <li>
+		            	<a href="$!webPath/goods_class.htm" class="meun_a" target="_blank">All Categories</a>
+		            </li>
+		            <li>
+		            	<a href="#" class="meun_a" target="_blank">Ebuyair Shop</a>
+		            </li>
+		            <li>
+		            	<a href="$!webPath/group/index.htm" class="meun_a" target="_blank">Group Purchase</a>
+		            </li>
+                 	#foreach($gc in $!gcViewTools.query_gc("",8))
+                	<li>
+                		#if($!gc.icon_type==0)
+			            #if($!gc.icon_sys!="")
+			            #set($icon_img="$!webPath/resources/style/common/images/icon/icon_$!{gc.icon_sys}.png")
+			            #end
+			            #else
+			            #if($!gc.icon_acc)
+			            #set($icon_img="$!imageWebServer/$!gc.icon_acc.path/$!gc.icon_acc.name")
+			            #end
+			            #end
+			            <a href="$!webPath/store_goods_list_$!{gc.id}.htm" class="meun_a" target="_blank">$!gc.className</a>
+                	</li>
+                    #end
+                </ul>
+            </div>
+            <div class="box" id="navbox_second" style="height:0px;opacity:0;overflow:hidden;">
+                <!-- 固定菜单 -->
+                <div class="cont" style="display:none;">
+                    <ul class="sublist clearfix">
+                        <li>
+                            <h3 class="mcate-item-hd">
+                                <span>
+                                    <a href="mall/list.php?catid=10051" title="Mechanical Watch">Mechanical Watch</a>
+                                </span>
+                            </h3>
+                            <p class="mcate-item-bd">
+                                <a href="mall/list.php?catid=10351" title="Steel belt mechanical watch">Steel belt mechanical watch</a>
+                                <a href="mall/list.php?catid=10352" title="Belt mechanical table">Belt mechanical table</a>
+                                <a href="mall/list.php?catid=10353" title="Automatic mechanical watch">Automatic mechanical watch</a>
+                                <a href="mall/list.php?catid=10354" title="Manual mechanical watch">Manual mechanical watch</a>
+                                <a href="mall/list.php?catid=10355" title="Other mechanical watches">Other mechanical watches</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="cont" style="display:none;">
+                    <ul class="sublist clearfix">
+                        <li>
+                            <h3 class="mcate-item-hd">
+                                <span>
+                                    <a href="mall/list.php?catid=10051" title="Mechanical Watch">Mechanical Watch</a>
+                                </span>
+                            </h3>
+                            <p class="mcate-item-bd">
+                                <a href="mall/list.php?catid=10351" title="Steel belt mechanical watch">Steel belt mechanical watch</a>
+                                <a href="mall/list.php?catid=10352" title="Belt mechanical table">Belt mechanical table</a>
+                                <a href="mall/list.php?catid=10353" title="Automatic mechanical watch">Automatic mechanical watch</a>
+                                <a href="mall/list.php?catid=10354" title="Manual mechanical watch">Manual mechanical watch</a>
+                                <a href="mall/list.php?catid=10355" title="Other mechanical watches">Other mechanical watches</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+				<div class="cont" style="display:none;">
+                    <ul class="sublist clearfix">
+                        <li>
+                            <h3 class="mcate-item-hd">
+                                <span>
+                                    <a href="mall/list.php?catid=10051" title="Mechanical Watch">Mechanical Watch</a>
+                                </span>
+                            </h3>
+                            <p class="mcate-item-bd">
+                                <a href="mall/list.php?catid=10351" title="Steel belt mechanical watch">Steel belt mechanical watch</a>
+                                <a href="mall/list.php?catid=10352" title="Belt mechanical table">Belt mechanical table</a>
+                                <a href="mall/list.php?catid=10353" title="Automatic mechanical watch">Automatic mechanical watch</a>
+                                <a href="mall/list.php?catid=10354" title="Manual mechanical watch">Manual mechanical watch</a>
+                                <a href="mall/list.php?catid=10355" title="Other mechanical watches">Other mechanical watches</a>
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+				<!-- 固定菜单 END -->
+                #foreach($gc in $!gcViewTools.query_gc("",8))
+	                <div class="cont" style="display:none;">
+	                 #foreach($gc1 in $gc.childs)
+	                	<ul class="sublist clearfix">
+	                    	<li>
+		                    	<h3 class="mcate-item-hd">
+	                                <span>
+	                                    <a href="$!webPath/store_goods_list_$!{gc1.id}.htm" title="">$!gc1.className</a>
+	                                </span>
+	                            </h3>
+	                            #foreach($gc2 in $!gc1.childs)
+	                            <p class="mcate-item-bd">
+	                                <a href="$!webPath/store_goods_list_$!{gc2.id}.htm" title="">$!gc2.className</a>
+	                            </p>
+	                  			#end
+	                        </li>
+	                    </ul>
+	                    #end 
+	                </div>
+				#end 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="nav_center">
+    <!-- <div class="nav_left">
+        <div class="index_topleft">
+            <div class="left_menu" id="left_menu"> 
+        #foreach($gc in $!gcViewTools.query_gc("",8))
+          #set($icon_img="$!webPath/resources/style/common/images/icon/default_icon.png")
+          <dl #if($!velocityCount%2==0) class="left_menu_dl double"  #else class="left_menu_dl" #end child_count="$!gc.childs.size()" #if($!{gc.gc_color}) gc_color="$!{gc.gc_color}" #else gc_color="#E60012" #end  id="$!gc.id" style="position:relative;">
+         left_menu_this经过状态，和left_menu_dt不经状态过交换
+    
+ 			#if($!gc.icon_type==0)
+            #if($!gc.icon_sys!="")
+            #set($icon_img="$!webPath/resources/style/common/images/icon/icon_$!{gc.icon_sys}.png")
+            #end
+            #else
+            #if($!gc.icon_acc)
+            #set($icon_img="$!imageWebServer/$!gc.icon_acc.path/$!gc.icon_acc.name")
+            #end
+            #end
+             鼠标经过父级时添加style="border:1px solid #F00; border-left:3px solid #F00;"添加底层颜色 
+            <dt class="left_menu_dt" id="dts_$!gc.id">
+            	<i class="left_menu_i">
+            		<img src="$!icon_img" width="16" height="16" />
+            	</i>
+            	<strong class="left_menu_str">
+            		<a href="$!webPath/store_goods_list_$!{gc.id}.htm">$!gc.className</a>
+            	</strong>
+	            	<b class="left_menu_str_b">
+	            	#foreach($child_gc in $gcViewTools.query_third_rec("$!gc.id",4))
+	            	<a href="$!webPath/store_goods_list_$!{child_gc.id}.htm">$!{child_gc.className}</a>  
+	            	#end
+	            	</b>
+            </dt>
+            <dd class="left_menu_dd" style="display:none" id="child_$!gc.id">
+            存在广告时left_menu_con this   鼠标经过父级时添加style="border:1px solid #F00; border-left:3px solid #F00;"添加底层颜色
+             #set($adv_map=$!gcViewTools.query_gc_advert("$!gc.id","$!webPath"))
+              <div class="left_menu_con #if($!adv_map.get('advert_img')!="") this #end" id="left_menu_con_$!{gc.id}">
+              #set($gbs=$gcViewTools.query_gc_brand("$!gc.id"))
+              #if($!gbs.size()>0)
+              <div class="menu_con_right_top">
+                	<dl>
+                    	<dt>
+                        #foreach($map in $gbs)
+                            <span><a href="$!webPath/brand_goods_$!{map.get('id')}.htm">$!{map.get('name')}</a></span>
+                    	#end	
+                       </dt>  
+                    </dl>
+                </div>
+              #end  
+              <span class="left_menu_sp">
+                 	
+                <div class="left_menu_con_center">
+                 #foreach($gc1 in $gc.childs)
+                	<div class="left_menu_con_center_left">
+                    	<dl>
+                        	<dt><a href="$!webPath/store_goods_list_$!{gc1.id}.htm">$!gc1.className</a></dt>
+                            #foreach($gc2 in $!gc1.childs)
+                            <dd><a href="$!webPath/store_goods_list_$!{gc2.id}.htm">$!gc2.className</a></dd>
+                  			#end
+                        </dl>
+                    </div>
+                    #end 
+                </div>
+                #if($!adv_map.get('advert_img')!="" && $!adv_map.get('advert_img')!='null')
+                <div class="right_menu_con_right_img">
+                #set($adv_url=$!adv_map.get('advert_url'))
+                	<a #if($!{adv_url}!="") href="$!adv_map.get('advert_url')" target="_blank" #else href="javascript:void(0);" #end><img src="$!adv_map.get('advert_img')"/></a>
+                </div>
+                #end
+                </span> 
+             </div>
+            </dd>
+          </dl>
+          #end </div>
+        </div>
+    </div> -->
+    <!-- <ul id="navul">
+      #set($navs=$!navTools.queryNav(0,-1))
+      #foreach($nav in $navs)
+      #if($!CommUtil.indexOf("$!nav.url","http://")>=0)
+      #set($url="$!nav.url")
+      #else
+      #set($url="$!webPath/$!{nav.url}")
+      #end
+      <li><a href="$!url" id="$!nav.id" #if($!nav.new_win==1)target="_blank"#end original_url="$!nav.original_url"><span>$!{nav.title}</span></a></li>
+      #end
+    </ul> -->
+</div>
+</div>

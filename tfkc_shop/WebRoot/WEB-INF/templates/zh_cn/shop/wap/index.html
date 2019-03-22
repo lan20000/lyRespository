@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta name="apple-wap-web-app-capable" content="yes">
+<meta name="apple-wap-web-app-status-bar-style" content="black-translucent">
+<title>$!config.title</title>
+<link href="$!webPath/resources/style/system/front/wap/v2.0/css/v2.0style.css" rel="stylesheet" type="text/css" />
+<link href="$!webPath/resources/style/system/front/wap/v2.0/css/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<script src="$!webPath/resources/js/wap/jquery-1.10.2.min.js"></script>
+<script src="$!webPath/resources/js/TouchSlide.1.1.js"></script>
+<script src="$!webPath/resources/js/jquery.SuperSlide.2.1.1.js"></script>
+<script>
+$(function(){
+
+	$("#search_btn").click(function(){
+		$("#main_title").hide();
+		$("#search_form").slideToggle(2000);
+	});
+	
+	$(".group_top>ul>li").click(function(){
+    	$(this).siblings('li').removeClass("this");  
+		$(this).addClass("this");
+	});
+}); 
+
+function search_form(){
+	jQuery("#theForm").submit();
+}
+function isWeiXin(){
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+</script>
+</head>
+<body>indexindexindexwap
+<div class="main" style="background-color: #fffafa">
+
+	<!-- 首页分类菜单 -->
+<!-- 	<div class="main_menu">
+		 <div class="group_top">
+		    <ul>
+		      <li id="menu_home" class="this"><a href="$!webPath/wap/index.htm"><span>商城首页</span></a></li>
+		      #foreach($gc in $gcs)
+		      	<li id="menu_$!{gc.className}"><a href="$!webPath/wap/goods_column.htm?gcid=$!{gc.id}&title=menu_$!{gc.className}"><span>$!{gc.className}</span></a></li>
+		      #end
+		    </ul>
+		  </div>
+	</div> -->
+	
+	<div style="width:100%;height:40px;color:#F0F0F0;font-size:12px;line-height:40px;background-color:#000;">
+		<img style="width:30px; height:30px; border-radius:50%;vertical-align:middle;margin:0px 10px;" src="$!webPath/weixin/koala60x60.png">
+		<span>粉色考拉-旅游商城</span>
+	</div>
+	
+	 <!--首页轮播广告图-->
+    <div class="focusBox" id="focusBox">
+   		<script src="$!webPath/advert_invoke.htm?id=13"></script>
+    </div>
+ 
+    <!-- 首页活动 -->
+    <div class="activity_box" id="activity_box">
+   		<ul>
+   			<li style="background-color: #ff6633;"><a href="$!webPath/index/subject_view.htm?id=2"><span>天天特价</span></a></li>
+			
+   			<li style="background-color: #ff99cc;"><a href="$!webPath/wap/goods_column.htm?gcid=$!{gcs.get(0).id}&title=menu_$!{gcs.get(0).className}"><span>$!{gcs.get(0).className}</span></a></li>
+   			<li style="background-color: #ffcc33;"><a href="$!webPath/wap/goods_column.htm?gcid=$!{gcs.get(1).id}&title=menu_$!{gcs.get(1).className}"><span>$!{gcs.get(1).className}</span></a></li>
+   			<li style="background-color: #66cc66;"><a href="$!webPath/wap/goods_column.htm?gcid=$!{gcs.get(2).id}&title=menu_$!{gcs.get(2).className}"><span>$!{gcs.get(2).className}</span></a></li>
+   			<li style="background-color: #99cc33;"><a href="$!webPath/wap/goods_column.htm?gcid=$!{gcs.get(3).id}&title=menu_$!{gcs.get(3).className}"><span>$!{gcs.get(3).className}</span></a></li>
+			
+			<!-- <li style="background-color: #ff99cc;"><a href="$!webPath/index/subject_view.htm?id=group"><span>拼团优惠</span></a></li>
+   			<li style="background-color: #ffcc33;"><a href="$!webPath/index/subject_view.htm?id=4"><span>旅游休闲</span></a></li>
+   			<li style="background-color: #66cc66;"><a href="$!webPath/index/subject_view.htm?id=5"><span>时尚家电</span></a></li>
+   			<li style="background-color: #99cc33;"><a href="$!webPath/wap/buyer/center.htm?op=center"><span>用户积分</span></a></li>
+			<li style="background-color: #99cc33;"><a href="$!webPath/index/subject_view.htm?id=6"><span>美丽厨卫</span></a></li> -->
+			
+   		</ul>
+    </div>
+    
+    <!-- 热门推荐 -->
+  <div class="hot_recommed">
+    	<strong class="recommed_title">【 超值热卖 】</strong>
+    	
+    	
+    	#if($!top_recommends.size()>0)
+    	 #foreach($rec in $top_recommends)
+	    	 #set($img = "$!imageWebServer/$!rec.ad_acc.path/$!rec.ad_acc.name")
+	    	 #if($!rec.ad_acc.path)
+	    	 	<div class="recommed_goods">
+				<a href="$!webPath/wap/goods.htm?id=$!rec.id">
+		    		<img src="$!img" style="height:calc(100vw*0.51);width:100%;">
+		    		<span class="recom_title">$!{rec.goods_name}</span>
+		    		<span class="recom_name">$!{rec.seo_description}</span>
+					<div style="width:100%; text-align:justify; font-size:5.5vw; padding-top:10px; padding-bottom:5px;">
+		    		<span style="display:inline-block; font-size:1em; color:red; margin-left:10px; width:20vw;">￥$!{rec.store_price}</span>
+					<span style="float:right; margin-right:3%; clear:both; font-size:0.65em; border-radius:5px; color:#fff; padding:5px 5px 3px 5px; text-align:center; background-color:#e02e24; line-height:1.9em; width:20vw; ">去下单&nbsp;&nbsp;<i class="fa fa-angle-right fa-1x"></i></span>
+					</div>
+		    	</a>
+				</div>
+	    	 #end
+	    	 	
+	       #end
+	    #end
+    	
+    	<div class="recommed_goods" style="height: 48px;"></div>
+    </div>
+$!httpInclude.include("/wap/footer.htm")
+</div>
+</body>
+</html>

@@ -1,0 +1,13 @@
+
+/* nav_menu "Î¢ÈíÑÅºÚ"*/
+.nav_menu{height:39px;background:#e4393c;}
+.navf{width:1208px;height:39px;position:relative;margin:0 auto;}
+.navf .lists li{float:left;}
+.navf .lists a{font-family:"Î¢ÈíÑÅºÚ";float:left;display:block;padding:0px 10px;line-height: 42px;height:42px;text-align:center;font-size:13px;color:#fff;}
+.navf .lists a:hover{color:#FFA304;}
+.navf .lists a:hover,.navf .lists .now{color:#F00;background:#fff;}
+.navf .box{position:absolute;left:0px;top:42px;z-index:999;width:1190px;background:#FFF;overflow:hidden;height:0;filter:alpha(opacity=0);opacity:0;	-webkit-box-shadow: 5px 5px 10px 0px #707070;
+	-moz-box-shadow: 5px 5px 10px 0px #707070;
+	box-shadow: 5px 5px 10px 0px #707070;}
+.navf .cont{position:relative;padding:25px 0 0px 24px;}
+#main_demo{clear: both;width:100%;min-height:100%;z-index:9999; background:#fff; -moz-border-radius:12px;-khtml-border-radius: 12px;-webkit-border-radius: 12px; border-radius:12px;}
